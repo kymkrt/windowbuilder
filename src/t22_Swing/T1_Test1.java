@@ -11,12 +11,12 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
-public class Test1 extends JFrame {
+public class T1_Test1 extends JFrame {
 
 	private JPanel contentPane;//바닥을 콘텐츠팬이라고 한다
 
 
-	public Test1() {
+	public T1_Test1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//닫는거
 //		setBounds(100, 100, 665, 394);
 		setSize(800, 600);
@@ -58,6 +58,6 @@ public class Test1 extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new Test1();
+		new T1_Test1();
 	}
 }
