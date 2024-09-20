@@ -82,19 +82,22 @@ public class HoewonMain extends JFrame{
 		//회원등록버튼 클릭
 		btnInput.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				dispose(); //현재 창(프레임)만 닫는다
+				new HoewonInput();
 			}
 		});
 		//회원개별조회 클릭
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose(); //현재 창(프레임)만 닫는다
 				
 			}
 		});
 		//회원전체조회 클릭
 		btnList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				dispose(); //현재 창(프레임)만 닫는다
+				new HoewonList();
 			}
 		});
 		//종료버튼 클릭
@@ -104,7 +107,6 @@ public class HoewonMain extends JFrame{
 			}
 		});
 	}
-	
 	
 	public static void main(String[] args) {
 		new HoewonMain();

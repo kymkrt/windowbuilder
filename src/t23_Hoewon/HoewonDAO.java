@@ -48,4 +48,82 @@ public class HoewonDAO extends DBConn{
 		}
 		return vData;
 	}
+	
+	//회원 가입 처리
+	public int setHoewonInput(HoewonVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into hoewon values (default,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setInt(2, vo.getAge());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setString(4, vo.getJoinday());
+			pstmt.setString(5, vo.getAddress());
+			res = pstmt.executeUpdate();//쿼리는셀렉트 업데이트는 그냥 보내기만
+		} catch (SQLException e) {
+			System.out.println("sql 오류 "+e.getMessage());
+		}finally {
+			pstmtClose();//인서트라 리설트셋이 필요없다
+		}
+		
+		return res;
+	}
+	//회원 가입일 오름차순/내림차순 정렬
+	public Vector getHoewonAlign(String str, String order) {//str이라고 한이유는 여길 콤보상자로 해서 원하는 조건을 골라서 정렬할수 있도록 확장성 생각
+		Vector vData = new Vector();
+		try {
+			if(order.equals("a")) {
+			sql = "select * from hoewon order by joinday";
+			}else {
+			sql = "select * from hoewon order by joinday desc";
+			}
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();//셀레트 문장에서 가져오는 레코드를 rs가 받는다
+			
+			while(rs.next()) {//한칸 내림 꺼내서
+				Vector vo = new Vector();//타입을 준다
+				vo.add(rs.getInt("idx")); //하나하나 가져온걸 타입맞춰서 넣어준다
+				vo.add(rs.getString("name"));
+				vo.add(rs.getInt("age"));
+				vo.add(rs.getString("gender"));
+				vo.add(rs.getString("joinday"));
+				vo.add(rs.getString("address"));
+				
+				vData.add(vo);//담고
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류 "+e.getMessage());
+		}finally {
+			rsClose();//왜 닫지?
+		}
+		return vData;//리턴
+	}
+	//조건검색처리
+	public Vector getConditionSearch(String str, String txtCondi) {
+		Vector vData = new Vector();
+		try {
+			sql = "select * from hoewon where "+str+" like ? order by name";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+txtCondi+"%");
+			rs = pstmt.executeQuery();//셀레트 문장에서 가져오는 레코드를 rs가 받는다
+			
+			while(rs.next()) {//한칸 내림 꺼내서
+				Vector vo = new Vector();//타입을 준다
+				vo.add(rs.getInt("idx")); //하나하나 가져온걸 타입맞춰서 넣어준다
+				vo.add(rs.getString("name"));
+				vo.add(rs.getInt("age"));
+				vo.add(rs.getString("gender"));
+				vo.add(rs.getString("joinday").substring(0, 10));
+				vo.add(rs.getString("address"));
+				
+				vData.add(vo);//담고
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류 "+e.getMessage());
+		}finally {
+			rsClose();//왜 닫지?
+		}
+		return vData;//리턴
+	}
 }
